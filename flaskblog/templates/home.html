@@ -1,0 +1,77 @@
+{% extends "index.html" %}
+{% block content %}
+    <style>
+        /* Custom CSS for table borders */
+        .table-border {
+            border-bottom: 1px solid #dee2e6; /* Add bottom border */
+        }
+
+        .border-left {
+            border-left: 1px solid #dee2e6; /* Add left border */
+        }
+
+        .profile-photo {
+            width: 60px; /* Adjust width as needed */
+            height: 60px; /* Adjust height as needed */
+            border-radius: 80%; /* Make the photo round */
+            object-fit: cover; /* Ensure the photo fills the container */
+        }
+
+
+    </style>
+
+    <table class="table table-border">
+         <h2> Top 10 Rankes in Quize Today
+             {% if not current_user.quiz_submitted %}
+        <a href="{{ url_for('quiz') }}">Start Quiz</a>
+    {% endif %}
+         </h2>
+        <thead>
+            <tr>
+                <th class="border-left">Rank</th>
+                <th >Username</th>
+                <th>Scores</th>
+                <th>Time Taken</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in top_10_users %}
+                <tr>
+                    <td {% if user == current_user %} class="current-user"{% endif %}>{{ loop.index }}</td>
+                    <td {% if user == current_user %} class="current-user"{% endif %}><img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">{{ user.username }}</td>
+                    <td {% if user == current_user %} class="current-user"{% endif %}>{{ user.score }}</td>
+                    <td {% if user == current_user %} class="current-user"{% endif %}>{{ user.time_taken }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+<table class="table table-border">
+         <h2> <u>Top 10 Rankes in Quize </u>
+             {% if not current_user.quiz_submitted %}
+        <a href="{{ url_for('quiz') }}">Start Quiz</a>
+    {% endif %}
+         </h2>
+        <thead>
+            <tr>
+                <th class="border-left">Rank</th>
+                <th>Username</th>
+                <th>Scores</th>
+                <th>Time Taken</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in sorted_users %}
+                <tr>
+                    <td {% if user == current_user %} class="current-user"{% endif %}>{{ loop.index }}</td>
+                    <td {% if user == current_user %} class="current-user"{% endif %}><img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">{{ user.username }}</td>
+                    <td {% if user == current_user %} class="current-user"{% endif %}>{{ user.total_score }}</td>
+                    <td {% if user == current_user %} class="current-user"{% endif %}>{{ user.total_time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+
+{% endblock content %}

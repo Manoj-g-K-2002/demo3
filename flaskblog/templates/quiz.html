@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px; /* Added margin-bottom for space below heading */
+        }
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ccc; /* Added border to the form */
+            padding: 20px; /* Added padding for better appearance */
+            border-radius: 10px; /* Added border-radius for rounded corners */
+        }
+        .question {
+            margin-bottom: 20px; /* Adjusted margin-bottom for space between questions */
+            border-bottom: 1px solid #ccc; /* Added border to separate questions */
+            padding-bottom: 20px; /* Added padding for better appearance */
+        }
+        .option-label {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Quiz</h1>
+        <form action="{{ url_for('quiz') }}" method="post">
+            <div>
+                {% for qa in questions_answers %}
+                <div class="question">
+                    <p>{{ loop.index }}: {{ qa['question']}}</p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="true_{{ loop.index }}" name="question-{{ loop.index }}" value="True" required>
+                        <label class="form-check-label option-label" for="true_{{ loop.index }}">True</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="false_{{ loop.index }}" name="question-{{ loop.index }}" value="False" required>
+                        <label class="form-check-label option-label" for="false_{{ loop.index }}">False</label>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
